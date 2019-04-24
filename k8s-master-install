@@ -23,7 +23,9 @@ https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 EOF
 yum install -y kubelet kubeadm kubectl
 systemctl enable kubelet
-kubeadm init --pod-network-cidr=10.244.0.0/16 > key.txt
+kubeadm init --pod-network-cidr=10.244.0.0/16 > key.temp
+tail -2 key.temp > key.txt
+rm key.temp
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
